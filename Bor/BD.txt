@@ -1,0 +1,172 @@
+-- phpMyAdmin SQL Dump
+-- version 3.5.1
+-- http://www.phpmyadmin.net
+--
+-- Хост: 127.0.0.1
+-- Время создания: Апр 04 2018 г., 10:43
+-- Версия сервера: 5.5.46-log
+-- Версия PHP: 5.3.13
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- База данных: `BD_Aptek`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `akt`
+--
+
+CREATE TABLE IF NOT EXISTS `akt` (
+  `id_akt` int(50) NOT NULL AUTO_INCREMENT,
+  `id_post` int(50) NOT NULL,
+  `id_sot` int(50) NOT NULL,
+  `data` date NOT NULL,
+  `id_ap` int(50) NOT NULL,
+  PRIMARY KEY (`id_akt`)
+) ENGINE=MyISAM  DEFAULT CHARSET=cp1251 AUTO_INCREMENT=3 ;
+
+--
+-- Дамп данных таблицы `akt`
+--
+
+INSERT INTO `akt` (`id_akt`, `id_post`, `id_sot`, `data`, `id_ap`) VALUES
+(1, 1, 1, '2018-03-01', 3),
+(2, 1, 2, '2018-02-20', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `apteki`
+--
+
+CREATE TABLE IF NOT EXISTS `apteki` (
+  `id_ap` int(100) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `adress` varchar(50) NOT NULL,
+  `phone` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_ap`)
+) ENGINE=MyISAM  DEFAULT CHARSET=cp1251 AUTO_INCREMENT=19 ;
+
+--
+-- Дамп данных таблицы `apteki`
+--
+
+INSERT INTO `apteki` (`id_ap`, `name`, `adress`, `phone`) VALUES
+(1, 'Аптека-Озерки', 'Гражданский-пр,д.7,литА', '+7(988)900-90-35'),
+(2, 'Меркурий', 'Пр.Стачек,д.75', '+7(800)555-36-39'),
+(3, 'Аптека-Долфин', 'ул.Есенина,д.123', '+7(955)400-04-01'),
+(4, 'Доктор+', 'Лесной-пр,д194,к.5', '+7(908)643-33-43'),
+(16, 'Доктор-Столетов', 'ул.Савушкина,д.3', '+7(911)708-13-16');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `lekar`
+--
+
+CREATE TABLE IF NOT EXISTS `lekar` (
+  `id_lekar` int(50) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `id_ap` int(50) NOT NULL,
+  `id_nazn` int(50) NOT NULL,
+  `id_post` int(50) NOT NULL,
+  `ed_izm` int(50) DEFAULT NULL,
+  `price` int(50) NOT NULL,
+  `goden` date NOT NULL,
+  PRIMARY KEY (`id_lekar`)
+) ENGINE=MyISAM  DEFAULT CHARSET=cp1251 AUTO_INCREMENT=3 ;
+
+--
+-- Дамп данных таблицы `lekar`
+--
+
+INSERT INTO `lekar` (`id_lekar`, `name`, `id_ap`, `id_nazn`, `id_post`, `ed_izm`, `price`, `goden`) VALUES
+(1, 'Компливит', 3, 2, 2, 1, 180, '2022-03-15'),
+(2, 'Цефазолин', 2, 1, 1, 10, 270, '2026-02-26');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `nazn`
+--
+
+CREATE TABLE IF NOT EXISTS `nazn` (
+  `id_nazn` int(50) NOT NULL AUTO_INCREMENT,
+  `group` varchar(50) NOT NULL,
+  `text` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id_nazn`)
+) ENGINE=MyISAM  DEFAULT CHARSET=cp1251 AUTO_INCREMENT=6 ;
+
+--
+-- Дамп данных таблицы `nazn`
+--
+
+INSERT INTO `nazn` (`id_nazn`, `group`, `text`) VALUES
+(1, 'Антибиотики', 'Применяют по выписке врача'),
+(2, 'Витамины', 'Комплекс витаминов от A до D'),
+(3, 'Сиропы', 'Применяются при кашле');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `postavhiki`
+--
+
+CREATE TABLE IF NOT EXISTS `postavhiki` (
+  `id_post` int(100) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `predstav` varchar(50) NOT NULL,
+  `dolzhn` varchar(50) NOT NULL,
+  `strana` varchar(50) NOT NULL,
+  `adress` varchar(50) DEFAULT NULL,
+  `phone` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id_post`)
+) ENGINE=MyISAM  DEFAULT CHARSET=cp1251 AUTO_INCREMENT=5 ;
+
+--
+-- Дамп данных таблицы `postavhiki`
+--
+
+INSERT INTO `postavhiki` (`id_post`, `name`, `predstav`, `dolzhn`, `strana`, `adress`, `phone`) VALUES
+(1, 'Фарм-групп1', 'Сергеев А.А.', 'Менеджер', 'Россия', 'г.Спб,ул.Ленина,д.9', '+7(904)322-43-21'),
+(2, 'Лекар-паблик', 'Василенко М.Ю.', 'Ген.директор', 'Украина', 'г.Одесса,пл.Бондарева,д.1', '+7(909)122-54-23');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `sotrud`
+--
+
+CREATE TABLE IF NOT EXISTS `sotrud` (
+  `id_sot` int(50) NOT NULL AUTO_INCREMENT,
+  `FIO` varchar(50) NOT NULL,
+  `dolzhn` varchar(50) NOT NULL,
+  `data` date NOT NULL,
+  `phone` varchar(50) NOT NULL,
+  `zp` int(50) NOT NULL,
+  `id_ap` int(50) NOT NULL,
+  `photo` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id_sot`)
+) ENGINE=MyISAM  DEFAULT CHARSET=cp1251 AUTO_INCREMENT=4 ;
+
+--
+-- Дамп данных таблицы `sotrud`
+--
+
+INSERT INTO `sotrud` (`id_sot`, `FIO`, `dolzhn`, `data`, `phone`, `zp`, `id_ap`, `photo`) VALUES
+(1, 'Сергеев', 'Продавец-кассир', '1997-01-24', '+7(904)800-45-43', 35000, 0, '1.jpeg'),
+(2, 'Кирилленко А.В.', 'Администратор', '1996-07-13', '+7(954)532-32-86', 45000, 1, '2.jpeg');
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

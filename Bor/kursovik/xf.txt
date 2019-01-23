@@ -1,0 +1,153 @@
+-- phpMyAdmin SQL Dump
+-- version 2.6.1
+-- http://www.phpmyadmin.net
+-- 
+-- Хост: localhost
+-- Время создания: Фев 28 2018 г., 22:56
+-- Версия сервера: 5.0.45
+-- Версия PHP: 5.2.4
+-- 
+-- БД: `BD_Aptek`
+-- 
+
+-- --------------------------------------------------------
+
+-- 
+-- Структура таблицы `Nazn`
+-- 
+
+CREATE TABLE `Nazn` (
+  `id_nazn` int(50) NOT NULL auto_increment,
+  `group` varchar(50) NOT NULL,
+  `text` varchar(50) default NULL,
+  PRIMARY KEY  (`id_nazn`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=cp1251 AUTO_INCREMENT=4 ;
+
+-- 
+-- Дамп данных таблицы `Nazn`
+-- 
+
+INSERT INTO `Nazn` VALUES (1, 'Антибиотики', 'Применяют по выписке врача');
+INSERT INTO `Nazn` VALUES (2, 'Витамины', 'Комплекс витаминов от A до D');
+INSERT INTO `Nazn` VALUES (3, 'Сиропы', 'Применяются при кашле');
+
+-- --------------------------------------------------------
+
+-- 
+-- Структура таблицы `akt`
+-- 
+
+CREATE TABLE `akt` (
+  `id_akt` int(50) NOT NULL auto_increment,
+  `id_post` int(50) NOT NULL,
+  `id_sot` int(50) NOT NULL,
+  `data` date NOT NULL,
+  `id_ap` int(50) NOT NULL,
+  PRIMARY KEY  (`id_akt`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=cp1251 AUTO_INCREMENT=3 ;
+
+-- 
+-- Дамп данных таблицы `akt`
+-- 
+
+INSERT INTO `akt` VALUES (1, 1, 1, '2018-03-01', 3);
+INSERT INTO `akt` VALUES (2, 1, 2, '2018-02-20', 1);
+
+-- --------------------------------------------------------
+
+-- 
+-- Структура таблицы `apteki`
+-- 
+
+CREATE TABLE `apteki` (
+  `id_ap` int(100) NOT NULL auto_increment,
+  `name` varchar(50) NOT NULL,
+  `adress` varchar(50) NOT NULL,
+  `phone` varchar(50) NOT NULL,
+  `photo` varchar(10) default NULL,
+  PRIMARY KEY  (`id_ap`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=cp1251 AUTO_INCREMENT=5 ;
+
+-- 
+-- Дамп данных таблицы `apteki`
+-- 
+
+INSERT INTO `apteki` VALUES (1, 'Аптека-Озерки', 'Гражданский пр, д.7 литА', '+7(988)900-90-30', NULL);
+INSERT INTO `apteki` VALUES (2, 'Меркурий', 'Пр.Стачек, д.78', '+7(800)555-36-36', NULL);
+INSERT INTO `apteki` VALUES (3, 'Аптека-Долфин', 'ул.Есенина, д.123', '+7(955)400-04-02', NULL);
+INSERT INTO `apteki` VALUES (4, 'Доктор+', 'Лесной пр, д.21', '+7(908)643-33-43', NULL);
+
+-- --------------------------------------------------------
+
+-- 
+-- Структура таблицы `lekar`
+-- 
+
+CREATE TABLE `lekar` (
+  `id_lekar` int(50) NOT NULL auto_increment,
+  `name` varchar(50) NOT NULL,
+  `id_ap` int(50) NOT NULL,
+  `id_nazn` int(50) NOT NULL,
+  `id_post` int(50) NOT NULL,
+  `ed_izm` int(50) default NULL,
+  `price` int(50) NOT NULL,
+  `goden` date NOT NULL,
+  PRIMARY KEY  (`id_lekar`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=cp1251 AUTO_INCREMENT=3 ;
+
+-- 
+-- Дамп данных таблицы `lekar`
+-- 
+
+INSERT INTO `lekar` VALUES (1, 'Компиливит', 3, 2, 2, 1, 180, '2022-03-15');
+INSERT INTO `lekar` VALUES (2, 'Найз', 2, 1, 1, 10, 270, '2026-02-26');
+
+-- --------------------------------------------------------
+
+-- 
+-- Структура таблицы `postavhiki`
+-- 
+
+CREATE TABLE `postavhiki` (
+  `id_post` int(100) NOT NULL auto_increment,
+  `name` varchar(50) NOT NULL,
+  `predstav` varchar(50) NOT NULL,
+  `dolzhn` varchar(50) NOT NULL,
+  `strana` varchar(50) NOT NULL,
+  `adress` varchar(50) default NULL,
+  `phone` varchar(50) default NULL,
+  PRIMARY KEY  (`id_post`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=cp1251 AUTO_INCREMENT=3 ;
+
+-- 
+-- Дамп данных таблицы `postavhiki`
+-- 
+
+INSERT INTO `postavhiki` VALUES (1, 'Фарм-групп1', 'Сергеев А.А.', 'Менеджер', 'Россия', 'г.Спб,ул.Ленина,д.9', '+7(904)322-43-21');
+INSERT INTO `postavhiki` VALUES (2, 'Лекар-паблик', 'Василенко М.Ю.', 'Ген.директор', 'Украина', 'г.Одесса,пл.Бондарева,д.1', '+7(909)122-54-23');
+
+-- --------------------------------------------------------
+
+-- 
+-- Структура таблицы `sotrud`
+-- 
+
+CREATE TABLE `sotrud` (
+  `id_sot` int(50) NOT NULL auto_increment,
+  `FIO` varchar(50) NOT NULL,
+  `dolzhn` varchar(50) NOT NULL,
+  `data` date NOT NULL,
+  `phone` varchar(50) NOT NULL,
+  `zp` int(50) NOT NULL,
+  `id_ap` int(50) NOT NULL,
+  `photo` varchar(50) default NULL,
+  PRIMARY KEY  (`id_sot`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=cp1251 AUTO_INCREMENT=3 ;
+
+-- 
+-- Дамп данных таблицы `sotrud`
+-- 
+
+INSERT INTO `sotrud` VALUES (1, 'Матвеев А.С.', 'Продавец-кассир', '1997-01-24', '+7(904)800-45-43', 35000, 3, NULL);
+INSERT INTO `sotrud` VALUES (2, 'Кирилленко А.В.', 'Администратор', '1996-07-13', '+7(954)532-32-86', 45000, 1, NULL);
+        
